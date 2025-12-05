@@ -1,20 +1,30 @@
 name: 'feishu bot action'
-description: 'message by Feishu bot, super tiny.  run one time cost 1s .support linux macos and window, base node runner not by docker'
+description: 'message by Feishu bot, super tiny. run one time cost 1s. support linux macos and windows, base node runner not by docker. Supports text, post, image, share_chat, interactive (card) message types.'
 author: 'foxundermoon'
 inputs:
   url:
     required: true
-    description: 'web hook url'
+    description: 'Feishu webhook URL'
   msg_type:
     required: false
-    description: the msg type  https://www.feishu.cn/hc/zh-CN/articles/360024984973
+    description: |
+      Message type. Supported types:
+      - text: Plain text message
+      - post: Rich text message
+      - image: Image message
+      - share_chat: Share chat card
+      - interactive: Interactive card message (Feishu Card)
+      See: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
     default: text
   content:
     required: true
-    description: the msg content https://www.feishu.cn/hc/zh-CN/articles/360024984973
+    description: |
+      Message content in YAML format.
+      For interactive (card) type, this should be the card JSON structure.
+      See: https://open.feishu.cn/document/feishu-cards/quick-start/send-message-cards-with-custom-bot
 
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
 
 branding:
