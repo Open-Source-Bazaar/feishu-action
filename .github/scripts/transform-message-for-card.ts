@@ -61,9 +61,9 @@ const createUserLink = (user: GitHubUser) =>
 const sanitizeMarkdown = (text: string): string => {
   return text
     // 移除代码块
-    .replace(/```[\s\S]*?```/g, '[代码块]')
+    // .replace(/```[\s\S]*?```/g, '[代码块]')
     // 移除行内代码
-    .replace(/`[^`]+`/g, (match) => match.slice(1, -1))
+    // .replace(/`[^`]+`/g, (match) => match.slice(1, -1))
     // 将图片转换为链接文本
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '🖼️ [$1]($2)')
     // 将 ### 标题转换为加粗
