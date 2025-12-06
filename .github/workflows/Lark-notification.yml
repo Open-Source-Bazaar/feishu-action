@@ -29,7 +29,7 @@ jobs:
           YAML=$(echo '${{ toJSON(github) }}' | deno --allow-all .github/scripts/transform-message-for-card.ts)
           {
             echo 'content<<EOF'
-            echo '$YAML'
+            echo $YAML
             echo 'EOF'
           } >> $GITHUB_OUTPUT
 
