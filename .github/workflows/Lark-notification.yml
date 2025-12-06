@@ -23,6 +23,15 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Check for Feishu URL
+        env:
+          FEISHU_BOT_WEBHOOK_URL: ${{ secrets.FEISHU_BOT_WEBHOOK_URL }}
+        run: |
+          if [ -z "$FEISHU_BOT_WEBHOOK_URL" ]; then
+            echo "Error: FEISHU_BOT_WEBHOOK_URL secret is not set."
+            exit 1
+          fi
+
       - name: Event Message serialization
         id: message
         env:
