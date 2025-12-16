@@ -16,8 +16,6 @@ on:
 jobs:
   send-Lark-message:
     runs-on: ubuntu-latest
-    env:
-      FEISHU_BOT_WEBHOOK_URL: ${{ secrets.FEISHU_BOT_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v6
 
@@ -29,9 +27,9 @@ jobs:
         id: message
         run: |
           YAML=$(
-            cat <<'JSON' | deno run --allow-all .github/scripts/transform-message-for-card.ts
-          ${{ toJSON(github) }}
-          JSON
+            cat <<'JSON' | deno run --allow-all .github/scripts/transform-message.ts
+            ${{ toJSON(github) }}
+            JSON
           )
           {
             echo 'content<<EOF'
@@ -43,7 +41,7 @@ jobs:
         if: ${{ contains(steps.message.outputs.content, ':') }}
         uses: ./
         with:
-          url: ${{ env.FEISHU_BOT_WEBHOOK_URL }}
+          url: ${{ secrets.LARK_CHATBOT_HOOK_URL }}
           msg_type: interactive
           content: |
             ${{ steps.message.outputs.content }}
