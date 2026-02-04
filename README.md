@@ -77,6 +77,65 @@
       image_key: img_ecffc3b9-8f14-400f-a014-05eca1a4310g
 ```
 
+- ai_assistant (AI助手消息)
+
+```yml
+- name: AI Assistant Message
+  uses: Open-Source-Bazaar/feishu-action@v1
+  with:
+    url: ${{ secrets.FEISHU_BOT_WEBHOOK_URL }}
+    msg_type: ai_assistant
+    content: |
+      ai_assistant:
+        title: "代码审查报告 - ${{ github.event.pull_request.title }}"
+        assistant: "Clawdbot AI Assistant"
+        status: "completed"
+        timestamp: "${{ steps.date.outputs.iso }}"
+        sections:
+          - type: "header"
+            text: "代码审查完成"
+            level: "info"
+          
+          - type: "summary"
+            text: "已审查 ${{ steps.count.outputs.files_changed }} 个文件，发现3个建议和1个严重问题"
+          
+          - type: "code"
+            language: "typescript"
+            code: |
+              // 建议：使用const代替let
+              const result = calculate();
+              
+              // 问题：缺少错误处理
+              function riskyOperation() {
+                // 需要添加try-catch
+              }
+            suggestions:
+              - "使用const声明不变的值"
+              - "添加错误处理机制"
+          
+          - type: "metrics"
+            items:
+              - label: "代码质量评分"
+                value: "85/100"
+                trend: "+5"
+              - label: "潜在bug数量"
+                value: "2"
+                trend: "-1"
+          
+          - type: "divider"
+          
+          - type: "text"
+            text: "**详细报告已生成，请查看以下链接：**"
+          
+          - type: "actions"
+            buttons:
+              - text: "查看详细报告"
+                url: "${{ github.event.pull_request.html_url }}"
+              - text: "运行自动修复"
+                action: "run_fix"
+                confirm: "确定要运行自动修复吗？"
+```
+
 🔐 Set your secrets here: `https://github.com/USERNAME/REPO/settings/secrets`.
 
 Contexts and expression syntax for GitHub Actions, here: https://help.github.com/en/articles/contexts-and-expression-syntax-for-github-actions#github-context

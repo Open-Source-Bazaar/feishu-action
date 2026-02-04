@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import got from 'got'
 import yaml from 'js-yaml'
+import { parseAIAssistantContent } from './ai-assistant'
 
 interface Message {
   msg_type: string
@@ -11,12 +12,22 @@ interface Message {
 async function postMessage(): Promise<string> {
   const msg_type: string = core.getInput('msg_type')
   const content: string = core.getInput('content')
+  
   if (msg_type === 'interactive') {
     return await post({
       msg_type,
       card: yaml.load(content) as Record<string, unknown>
     })
   }
+  
+  if (msg_type === 'ai_assistant') {
+    const card = parseAIAssistantContent(content)
+    return await post({
+      msg_type: 'interactive',
+      card
+    })
+  }
+  
   return await post({
     msg_type,
     content: yaml.load(content) as Record<string, unknown>

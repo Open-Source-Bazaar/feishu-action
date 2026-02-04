@@ -14,6 +14,7 @@ inputs:
       - image: Image message
       - share_chat: Share chat card
       - interactive: Interactive card message (Feishu Card)
+      - ai_assistant: AI assistant message with structured format
       See: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
     default: text
   content:
@@ -21,6 +22,7 @@ inputs:
     description: |
       Message content in YAML format.
       For interactive (card) type, this should be the card JSON structure.
+      For ai_assistant type, use structured AI assistant format.
       See: https://open.feishu.cn/document/feishu-cards/quick-start/send-message-cards-with-custom-bot
 
 runs:
