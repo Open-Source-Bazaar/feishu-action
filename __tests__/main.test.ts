@@ -4,7 +4,9 @@ import yaml from 'js-yaml'
 
 test('action uses setup-node lts in composite wrapper', () => {
   const actionPath = path.join(__dirname, '..', 'action.yml')
-  const action = yaml.load(fs.readFileSync(actionPath, 'utf8')) as {
+  const action = yaml.load(fs.readFileSync(actionPath, 'utf8'), {
+    schema: yaml.JSON_SCHEMA
+  }) as {
     runs: {
       using: string
       steps: Array<{
