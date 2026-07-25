@@ -25,4 +25,8 @@ test('action uses setup-node lts in composite wrapper', () => {
       'node-version': 'lts/*'
     }
   })
+  expect(action.runs.steps[1]).toMatchObject({
+    shell: "${{ runner.os == 'Windows' && 'pwsh' || 'bash' }}",
+    run: 'node dist/index.js'
+  })
 })

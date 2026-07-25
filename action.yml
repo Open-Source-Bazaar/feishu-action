@@ -29,16 +29,7 @@ runs:
     - uses: actions/setup-node@v4
       with:
         node-version: 'lts/*'
-    - if: runner.os == 'Windows'
-      shell: pwsh
-      working-directory: ${{ github.action_path }}
-      env:
-        INPUT_URL: ${{ inputs.url }}
-        INPUT_MSG_TYPE: ${{ inputs.msg_type }}
-        INPUT_CONTENT: ${{ inputs.content }}
-      run: node dist/index.js
-    - if: runner.os != 'Windows'
-      shell: bash
+    - shell: ${{ runner.os == 'Windows' && 'pwsh' || 'bash' }}
       working-directory: ${{ github.action_path }}
       env:
         INPUT_URL: ${{ inputs.url }}
