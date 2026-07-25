@@ -24,8 +24,18 @@ inputs:
       See: https://open.feishu.cn/document/feishu-cards/quick-start/send-message-cards-with-custom-bot
 
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 'lts/*'
+    - shell: pwsh
+      working-directory: ${{ github.action_path }}
+      env:
+        INPUT_URL: ${{ inputs.url }}
+        INPUT_MSG_TYPE: ${{ inputs.msg_type }}
+        INPUT_CONTENT: ${{ inputs.content }}
+      run: node dist/index.js
 
 branding:
   color: 'blue'
