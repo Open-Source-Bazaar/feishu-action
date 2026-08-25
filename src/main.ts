@@ -25,6 +25,12 @@ async function postMessage(): Promise<string> {
 
 async function post(body: Message): Promise<string> {
   const url: string = core.getInput('url')
+  if (!url) {
+    throw new Error(
+      'The "url" input is empty. Check that the secret is configured and passed correctly.\n' +
+        'Note: repository secrets are unavailable to workflows triggered by fork pull requests.'
+    )
+  }
   const rsp = await got.post(url, {
     headers: {
       'Content-Type': 'application/json'
